@@ -5,7 +5,7 @@ namespace ObjectMapper.Test;
 [TestClass]
 public class MapTest
     {
-        public TestContext TestContext { get; set; }
+        public TestContext? TestContext { get; set; }
 
         [TestMethod]
         public void MapObjectTest()
@@ -25,18 +25,18 @@ public class MapTest
                 Age = 21
             };
 
-            TestContext.WriteLine("Before");
-            TestContext.WriteLine(JsonSerializer.Serialize(student));
-            TestContext.WriteLine(JsonSerializer.Serialize(updateStudent));
+            TestContext?.WriteLine("Before");
+            TestContext?.WriteLine(JsonSerializer.Serialize(student));
+            TestContext?.WriteLine(JsonSerializer.Serialize(updateStudent));
 
             MapObject<StudentDto, Student>.GetMapObject()
                 .CustomMap(dest => dest.Name, src => $"{src.FirstName} {src.LastName}")
                 .Ignore(dest => dest.Id)
                 .Copy(updateStudent, student);
 
-            TestContext.WriteLine("After");
-            TestContext.WriteLine(JsonSerializer.Serialize(student));
-            TestContext.WriteLine(JsonSerializer.Serialize(updateStudent));
+            TestContext?.WriteLine("After");
+            TestContext?.WriteLine(JsonSerializer.Serialize(student));
+            TestContext?.WriteLine(JsonSerializer.Serialize(updateStudent));
 
         }
     }
@@ -44,13 +44,13 @@ public class MapTest
     class Student
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int Age { get; set; }
     }
 
     class StudentDto
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public int Age { get; set; }
     }

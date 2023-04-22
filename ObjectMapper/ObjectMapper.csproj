@@ -3,6 +3,8 @@
     <PackageId>ObjectMapper.psxbox</PackageId>
     <Version>1.0.1</Version>
     <Authors>Adkham Yusupov</Authors>
+    <PackageDescription>A simple object mapper</PackageDescription>
+    <RepositoryUrl>https://github.com/psxbox/ObjectMapper</RepositoryUrl>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

@@ -9,7 +9,7 @@ namespace ObjectMapper;
 
 public class MapObject<TSrc, TDest>
     where TSrc : class
-    where TDest : class
+    where TDest : class, new() 
 {
     private readonly Dictionary<string, Delegate> _maps;
     private readonly List<string> _ignoreList;
@@ -20,8 +20,19 @@ public class MapObject<TSrc, TDest>
         _ignoreList = new();
     }
 
+    /// <summary>
+    /// Get the <see cref="this">MapObject</see>
+    /// </summary>
+    /// <returns><see cref="this">MapObject</see></returns>
     public static MapObject<TSrc, TDest> GetMapObject() => new();
 
+    /// <summary>
+    /// Custom map object members
+    /// </summary>
+    /// <param name="destination">Expression of destination object</param>
+    /// <param name="source">Expression of source object</param>
+    /// <typeparam name="TDestMember">Type of destination object member(property)</typeparam>
+    /// <returns></returns>
     public MapObject<TSrc, TDest> CustomMap<TDestMember>(Expression<Func<TDest, TDestMember>> destination, Expression<Func<TSrc, TDestMember>> source)
     {
         var destMember = destination.Body as MemberExpression;
@@ -33,6 +44,12 @@ public class MapObject<TSrc, TDest>
         return this;
     }
 
+    /// <summary>
+    /// Set ignoring property
+    /// </summary>
+    /// <param name="destObj">Expression of destination object</param>
+    /// <typeparam name="TDestMember">Type of destination object member(property)</typeparam>
+    /// <returns><see cref="this"/></returns>
     public MapObject<TSrc, TDest> Ignore<TDestMember>(Expression<Func<TDest, TDestMember>> destObj)
     {
         var destMember = destObj.Body as MemberExpression;
@@ -44,6 +61,11 @@ public class MapObject<TSrc, TDest>
         return this;
     }
 
+    /// <summary>
+    /// Copy properies from <see cref="TSrc"/> to <see cref="TDest"/>
+    /// </summary>
+    /// <param name="source">Source object</param>
+    /// <param name="destination">Destination object</param>
     public void Copy(TSrc source, TDest destination)
     {
         var props = destination.GetType().GetProperties();
@@ -59,9 +81,21 @@ public class MapObject<TSrc, TDest>
             else
             {
                 var srcProp = source.GetType().GetProperty(prop.Name);
+                if (srcProp is null) continue;
                 value = srcProp?.GetValue(source, null);
             }
             toProp?.SetValue(destination, value, null);
         }
     }
+
+    ///<summary>
+    /// Get the new <see cref="TDest">destination</see> object
+    ///</summary>
+    public TDest Get(TSrc src)
+    {
+        var dest = new TDest();
+        Copy(src, dest);
+        return dest;
+    }
+
 }
