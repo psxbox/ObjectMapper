@@ -5,7 +5,7 @@
     <Authors>Adkham Yusupov</Authors>
     <PackageDescription>A simple object mapper</PackageDescription>
     <RepositoryUrl>https://github.com/psxbox/ObjectMapper</RepositoryUrl>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>

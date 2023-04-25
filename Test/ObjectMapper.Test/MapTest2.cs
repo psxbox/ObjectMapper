@@ -11,7 +11,7 @@ namespace ObjectMapper.Test;
 
 
 [TestClass]
-public class JsonSerializeTest
+public class MapTest2
 {
     public TestContext? TestContext { get; set; }
 
@@ -126,6 +126,35 @@ public class JsonSerializeTest
 
         TestContext?.WriteLine("After");
         TestContext?.WriteLine(JsonSerializer.Serialize(device));
+    }
+
+    [TestMethod]
+    public void EnumerableTest()
+    {
+        var deviceDtos = new List<DeviceDto>
+        {
+            new DeviceDto { Name = "device01", Created = DateTime.Now },
+            new DeviceDto { Name = "device02", Created = DateTime.Now },
+            new DeviceDto { Name = "device03", Created = DateTime.Now },
+            new DeviceDto { Name = "device04", Created = DateTime.Now },
+            new DeviceDto { Name = "device05", Created = DateTime.Now },
+            new DeviceDto { Name = "device06", Created = DateTime.Now },
+            new DeviceDto { Name = "device07", Created = DateTime.Now },
+            new DeviceDto { Name = "device08", Created = DateTime.Now },
+        };
+
+        var mapper = MapObject<DeviceDto, Device>.GetMapObject()
+            .CustomMap(dest => dest.Settings, src => "some settings")
+            .Ignore(dest => dest.Updated);
+
+        var devices = deviceDtos.Select(dto => mapper.Get(dto));
+
+        foreach (var item in devices)
+        {
+            TestContext?.WriteLine(JsonSerializer.Serialize(item, JsonSerializerOptions.Default));
+        }
+
+        Assert.IsNotNull(devices);
     }
 }
 
