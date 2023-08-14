@@ -21,11 +21,10 @@ namespace ObjectMapper
             MapObject<TSrc, TDest>.GetMapObject().Copy(src, dest);
         }
 
-        public static TDest ConvertTo<TSrc, TDest>(this TSrc src)
-        where TSrc : class
+        public static TDest ConvertTo<TDest>(this object src)
         where TDest : class, new()
         {
-            return MapObject<TSrc, TDest>.GetMapObject().Get(src);
+            return MapObject<object, TDest>.GetMapObject().Get(src);
         }
     }
 }

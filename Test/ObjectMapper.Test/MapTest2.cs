@@ -129,6 +129,35 @@ public class MapTest2
     }
 
     [TestMethod]
+    public void CopyToTest2()
+    {
+        var device = new Device()
+        {
+            Name = "Test Device",
+            Created = DateTime.Now,
+        };
+
+        DeviceDto deviceDto = new();
+        device.CopyTo(deviceDto);
+
+        Console.WriteLine(JsonSerializer.Serialize(deviceDto));
+    }
+
+        [TestMethod]
+    public void ConvertToTest()
+    {
+        var device = new Device()
+        {
+            Name = "Test Device",
+            Created = DateTime.Now,
+        };
+
+        DeviceDto deviceDto = device.ConvertTo<DeviceDto>();
+
+        Console.WriteLine(JsonSerializer.Serialize(deviceDto));
+    }
+
+    [TestMethod]
     public void EnumerableTest()
     {
         var deviceDtos = new List<DeviceDto>

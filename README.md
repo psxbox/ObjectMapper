@@ -146,3 +146,7 @@ var mapper = MapObject<DeviceDto, Device>.GetMapObject()
 
 var devices = deviceDtos.Select(dto => mapper.Get(dto));
 ```
+
+## Changes
+### 1.0.3
+- New `CopyTo` and `ConvertTo` extension methods. If you want to use without custom map/ignore properties, use these methods. Example: `objectA.ConvertTo<TypeB>()`.
