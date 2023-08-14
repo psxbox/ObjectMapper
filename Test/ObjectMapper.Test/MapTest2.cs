@@ -121,7 +121,7 @@ public class MapTest2
             .Ignore(dest => dest.Created)
             .CustomMap(dest => dest.Settings,
                 src => JsonSerializer.Serialize(src.Settings, options));
-        
+
         updateDevice.CopyTo(device, mapper);
 
         TestContext?.WriteLine("After");
@@ -134,7 +134,7 @@ public class MapTest2
         var deviceDtos = new List<DeviceDto>
         {
             new DeviceDto { Name = "device01", Created = DateTime.Now },
-            new DeviceDto { Name = "device02", Created = DateTime.Now },
+            new DeviceDto { Name = "device02", Created = DateTime.Now, Updated = DateTime.Now},
             new DeviceDto { Name = "device03", Created = DateTime.Now },
             new DeviceDto { Name = "device04", Created = DateTime.Now },
             new DeviceDto { Name = "device05", Created = DateTime.Now },
@@ -144,8 +144,8 @@ public class MapTest2
         };
 
         var mapper = MapObject<DeviceDto, Device>.GetMapObject()
-            .CustomMap(dest => dest.Settings, src => "some settings")
-            .Ignore(dest => dest.Updated);
+            .CustomMap(dest => dest.Settings, src => "some settings");
+            //.Ignore(dest => dest.Updated);
 
         var devices = deviceDtos.Select(dto => mapper.Get(dto));
 

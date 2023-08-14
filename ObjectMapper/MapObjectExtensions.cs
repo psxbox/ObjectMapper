@@ -13,5 +13,19 @@ namespace ObjectMapper
         {
             mapper.Copy(src, dest);
         }
+
+        public static void CopyTo<TSrc, TDest>(this TSrc src, TDest dest)
+        where TSrc : class
+        where TDest : class, new()
+        {
+            MapObject<TSrc, TDest>.GetMapObject().Copy(src, dest);
+        }
+
+        public static TDest ConvertTo<TSrc, TDest>(this TSrc src)
+        where TSrc : class
+        where TDest : class, new()
+        {
+            return MapObject<TSrc, TDest>.GetMapObject().Get(src);
+        }
     }
 }
